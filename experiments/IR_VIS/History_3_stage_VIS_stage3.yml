@@ -1,0 +1,368 @@
+experiment_name: History_3_stage_VIS_stage3
+
+template:
+  sub_exp_name: M01
+  compound_model:
+    generator: generator_4_2
+    discriminator: discriminator_3_2
+    profiler: profiler_4_2
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M01
+  train_compound_model:
+    loss_function: MAE
+    evaluate_freq: 10
+    max_epoch: 200
+    use_VIS_channel: fixed_generation
+    use_PMW_channel: original_image
+    G_D_loss_ratio:
+      VIS_hours: 0.002
+      VIS_GAN: 1
+      VIS_L2: 1000
+      PMW_GAN: 0
+      PMW_L2: 0
+      predict_loss: 0.0001
+    optimizing_target: profiler
+  data:
+    data_folder: ../../TCSA_0608/
+    batch_size: 20
+    shuffle_buffer: 1000000
+    prefetch_buffer: 2
+    coordinate: polar
+    valid_profile_only: yes
+    good_VIS_only: no
+    phase_rules:
+      train:
+        range:
+          - 2004
+          - 2017
+        exclude:
+          - 2004
+          - 2006
+          - 2009
+          - 2013
+      valid:
+        add:
+          - 2004
+          - 2006
+          - 2009
+          - 2013
+      test:
+        add:
+          - 2004
+          - 2006
+          - 2009
+          - 2013
+
+sub_experiments:
+- sub_exp_name: M02
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M02
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2005
+          - 2007
+          - 2010
+          - 2014
+      valid:
+        add:
+          - 2005
+          - 2007
+          - 2010
+          - 2014
+      test:
+        add:
+          - 2005
+          - 2007
+          - 2010
+          - 2014
+
+- sub_exp_name: M03
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M03
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2006
+          - 2008
+          - 2011
+          - 2015
+      valid:
+        add:
+          - 2006
+          - 2008
+          - 2011
+          - 2015
+      test:
+        add:
+          - 2006
+          - 2008
+          - 2011
+          - 2015
+
+- sub_exp_name: M04
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M04
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2007
+          - 2009
+          - 2012
+          - 2016
+      valid:
+        add:
+          - 2007
+          - 2009
+          - 2012
+          - 2016
+      test:
+        add:
+          - 2007
+          - 2009
+          - 2012
+          - 2016
+
+- sub_exp_name: M05
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M05
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2004
+          - 2008
+          - 2010
+          - 2013
+      valid:
+        add:
+          - 2004
+          - 2008
+          - 2010
+          - 2013
+      test:
+        add:
+          - 2004
+          - 2008
+          - 2010
+          - 2013
+
+- sub_exp_name: M06
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M06
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2005
+          - 2009
+          - 2011
+          - 2014
+      valid:
+        add:
+          - 2005
+          - 2009
+          - 2011
+          - 2014
+      test:
+        add:
+          - 2005
+          - 2009
+          - 2011
+          - 2014
+
+- sub_exp_name: M07
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M07
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2006
+          - 2010
+          - 2012
+          - 2015
+      valid:
+        add:
+          - 2006
+          - 2010
+          - 2012
+          - 2015
+      test:
+        add:
+          - 2006
+          - 2010
+          - 2012
+          - 2015
+
+- sub_exp_name: M08
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M08
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2007
+          - 2011
+          - 2013
+          - 2016
+      valid:
+        add:
+          - 2007
+          - 2011
+          - 2013
+          - 2016
+      test:
+        add:
+          - 2007
+          - 2011
+          - 2013
+          - 2016
+
+- sub_exp_name: M09
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M09
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2004
+          - 2008
+          - 2012
+          - 2014
+      valid:
+        add:
+          - 2004
+          - 2008
+          - 2012
+          - 2014
+      test:
+        add:
+          - 2004
+          - 2008
+          - 2012
+          - 2014
+
+- sub_exp_name: M10
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M10
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2005
+          - 2009
+          - 2013
+          - 2015
+      valid:
+        add:
+          - 2005
+          - 2009
+          - 2013
+          - 2015
+      test:
+        add:
+          - 2005
+          - 2009
+          - 2013
+          - 2015
+
+- sub_exp_name: M11
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M11
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2006
+          - 2010
+          - 2014
+          - 2016
+      valid:
+        add:
+          - 2006
+          - 2010
+          - 2014
+          - 2016
+      test:
+        add:
+          - 2006
+          - 2010
+          - 2014
+          - 2016
+
+- sub_exp_name: M12
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M12
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2004
+          - 2007
+          - 2011
+          - 2015
+      valid:
+        add:
+          - 2004
+          - 2007
+          - 2011
+          - 2015
+      test:
+        add:
+          - 2004
+          - 2007
+          - 2011
+          - 2015
+
+- sub_exp_name: M13
+  compound_model:
+    load_pretrain_weight:
+      from_experiment: History_3_stage_VIS_stage2
+      from_sub_exp: M13
+  data:
+    phase_rules:
+      train:
+        exclude:
+          - 2005
+          - 2008
+          - 2012
+          - 2016
+      valid:
+        add:
+          - 2005
+          - 2008
+          - 2012
+          - 2016
+      test:
+        add:
+          - 2005
+          - 2008
+          - 2012
+          - 2016

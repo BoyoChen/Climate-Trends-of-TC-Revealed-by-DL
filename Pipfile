@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+pandas = "*"
+wget = "*"
+tables = "*"
+pyyaml = "*"
+scikit-learn = "*"
+polartransform = "*"
+h5py = "*"
+matplotlib = "*"
+
+[dev-packages]
+jupyterlab = "<3.0.0"
+arrow = "*"
+
+[requires]
+python_version = "3.8"

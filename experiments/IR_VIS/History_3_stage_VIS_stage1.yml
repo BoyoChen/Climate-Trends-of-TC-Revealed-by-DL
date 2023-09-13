@@ -18,7 +18,7 @@ template:
       profile: 1
       RMW: 0.0125
   data:
-    data_folder: ../../TCSA_0608/
+    data_folder: TCSA_data_2004_2018/
     batch_size: 20
     shuffle_buffer: 1000000
     prefetch_buffer: 2

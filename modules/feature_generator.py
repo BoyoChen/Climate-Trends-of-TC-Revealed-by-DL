@@ -6,7 +6,7 @@ import math
 import pickle
 from datetime import timedelta
 from modules.image_processor import cart2polar
-from modules.data_downloader import download_data
+from modules.data_downloader import download_h5_data
 
 
 def remove_outlier_and_nan(numpy_array, upper_bound=1000):
@@ -124,9 +124,6 @@ def data_split(images, label_df, feature_df, structure_profiles, phase):
 
 def extract_features_from_raw_file(data_folder, h5_name, coordinate):
     file_path = os.path.join(data_folder, h5_name)
-    if not os.path.isfile(file_path):
-        print(f'file {file_path} not found! try to download it!')
-        download_data(data_folder, h5_name)
     with h5py.File(file_path, 'r') as hf:
         images = hf['images'][:]
         if 'structure_profiles' in hf:
@@ -192,6 +189,7 @@ def load_dataset(data_folder, year_list, good_VIS_only=False, valid_profile_only
 
         if not os.path.isfile(pickle_path):
             print(f'pickle {pickle_path} not found! try to extract it from raw data!')
+            download_h5_data(data_folder)
             h5_names = [file_name for file_name in os.listdir(data_folder) if file_name.endswith('.h5')]
             print(f'founded h5 files:\n{h5_names}')
             for h5_name in reversed(h5_names):

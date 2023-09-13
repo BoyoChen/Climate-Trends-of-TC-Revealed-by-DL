@@ -1,31 +1,11 @@
-# DLTC
+# Climate Trends of Tropical Cyclone Intensity and Energy Extremes Revealed by Deep Learning
 
-This repository is the work place for analyzing Tropical Cyclone with deep learning methods.
-Three paper are covered:
+In this repository, we provide codes to reproduce the result describe in the following paper:
 
-### Estimating Tropical Cyclone Intensity by Satellite Imagery Utilizing Convolutional Neural Networks
+### Climate Trends of Tropical Cyclone Intensity and Energy Extremes Revealed by Deep Learning
 
-Buo-Fu Chen, Boyo Chen, Hsuan-Tien Lin, Russell L. Elsberry
-
-Weather and Forecasting 34 (2), 447-465
-
-![Weather and Forecasting 2019](figs/chen2019estimating.png)
-
-### Real-time Tropical Cyclone Intensity Estimation by Handling Temporally Heterogeneous Satellite Data
-
-Boyo Chen, Buo-Fu Chen, Yun-Nung Chen
-
-AAAI 2021
-
-![AAAI 2021](figs/chen2021real.gif)
-
-### CNN Profiler on Polar Coordinate Images for Tropical Cyclone Structure Analysis
-
-Boyo Chen, Buo-Fu Chen, Chun-Min Hsiao
-
-AAAI 2021
-
-![AAAI 2021](figs/chen2021cnn.gif)
+Buo-Fu Chen,
+Center for Weather Climate and Disaster Research, National Taiwan University, Taiwan
 
 
 ## Requirements
@@ -56,18 +36,18 @@ pipenv run python main.py <experiment_path>
 
 <experiment_path>:
 
-# CNN intensity estimation
-experiments/regressor_experiments/reproduce_CNN-TC.yml
+# CNN TC size estimation
+experiments/IR_only/History_IR1.yml
 
-# CNN-GAN intensity estimation
-experiments/GAN_experiments/five_stage_training_fix_target_m2n.yml
+# CNN-GAN TC size estimation
+experiments/IR_VIS/History_3_stage_VIS_stage1.yml
+experiments/IR_VIS/History_3_stage_VIS_stage2.yml
+experiments/IR_VIS/History_3_stage_VIS_stage3.yml
 
-# polar CNN size estimation
-experiments/regressor_experiments/polar_coordinate/polar_coordinate_R34.yml
 ```
 
-***Notice that on the very first execution, it will download and extract the dataset before saving it into a folder "TCIR_data/".
-This demands approximately 80GB space on disk as well as about 20 min preprocessing time, please be patient. :D***
+***Notice that on the very first execution, it will download and extract the dataset before saving it into a folder "TCSA_data_2004_2018/".
+This demands approximately 19GB space on disk as well as about 20 min preprocessing time, please be patient. :D***
 
 ### Some usful aguments
 
@@ -78,22 +58,21 @@ pipenv run python train main.py <experiment_path> --GPU_limit 3000
 ```
 
 #### Continue from previous progress
-An experiemnt is divided into several sub_exp's.
-For example, a *five_stage_training* experiment comprise 5 sub-exp's.
+An experiemnt contains several sub_exp's.
 
 Once the experiemnt get interrupted, we probably want to continue from the completed part.
-For example, when the *five_stage_training* experiment get interrupted when executing sub-exp #3 (*pretrain_regressor_all_data_stage*), we want to restart from the beginning of sub-exp #3 instead of sub-exp #1.
+For example, when the *History_IR1* experiment get interrupted when executing sub-exp #3 (*M03*), we want to restart from the beginning of sub-exp #3 instead of sub-exp #1.
 
 We can do this to save times:
 
 1. Remove partially done experiment's log.
 ```
-rm -r logs/five_stage_training/pretrain_regressor_all_data_stage/ 
+rm -r logs/History_IR1/M03/ 
 ```
 
 2. Restart experiment with argument: *omit_completed_sub_exp*.
 ```
-pipenv run python train main.py experiments/GAN_experiments/five_stage_training.yml --omit_completed_sub_exp
+pipenv run python train main.py experiments/IR_only/History_IR1.yml --omit_completed_sub_exp
 ```
 
 ## Evaluation

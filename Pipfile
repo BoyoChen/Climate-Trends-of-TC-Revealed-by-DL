@@ -5,13 +5,13 @@ verify_ssl = true
 
 [packages]
 pandas = "*"
-wget = "*"
 tables = "*"
 pyyaml = "*"
 scikit-learn = "*"
 polartransform = "*"
 h5py = "*"
 matplotlib = "*"
+gdown = "*"
 
 [dev-packages]
 jupyterlab = "<3.0.0"

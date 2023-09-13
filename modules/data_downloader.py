@@ -1,30 +1,42 @@
-import wget
-import tarfile
 import os
-import ssl
+import requests
 
+def download_file_from_google_drive(id, destination):
+    URL = "https://docs.google.com/uc?export=download&confirm=1"
+
+    session = requests.Session()
+
+    response = session.get(URL, params = { 'id' : id }, stream = True)
+    token = get_confirm_token(response)
+
+    if token:
+        params = { 'id' : id, 'confirm' : token }
+        response = session.get(URL, params = params, stream = True)
+
+    save_response_content(response, destination)    
+
+def get_confirm_token(response):
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            return value
+
+    return None
+
+def save_response_content(response, destination):
+    CHUNK_SIZE = 32768
+
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(CHUNK_SIZE):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
 
 file_dict = {
-    'TCSA.h5': 'https://learner.csie.ntu.edu.tw/~boyochen/TCSA/TCSA.h5.tar.gz'
+    'TCSA_2004_2018.h5': '18gQSmuGXEVDGDV9tsw00wSRhnWeNU4Xg'
 }
 
-compressed_postfix = '.tar.gz'
-
-
-def download_compressed_file(data_folder, file_name):
-    ssl._create_default_https_context = ssl._create_unverified_context
-    file_url = file_dict[file_name]
-    file_path = os.path.join(data_folder, file_name + compressed_postfix)
-    wget.download(file_url, out=file_path)
-
-
-def uncompress_file(data_folder, file_name):
-    compressed_file_path = os.path.join(data_folder, file_name + compressed_postfix)
-    if not os.path.isfile(compressed_file_path):
-        download_compressed_file(data_folder, file_name)
-
-    with tarfile.open(compressed_file_path) as tar:
-        tar.extractall(path=data_folder)
+def download_file(data_folder, file_name):
+    file_path = os.path.join(data_folder, file_name)
+    download_file_from_google_drive(file_dict[file_name], file_path)
 
 
 def verify_data(data_folder):
@@ -36,17 +48,13 @@ def verify_data(data_folder):
     return True
 
 
-def download_data(data_folder, h5_name):
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!
-    # need rewrite.
-    # given h5 file name, download the exactly one to data_folder.
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!
+def download_h5_data(data_folder):
     if not os.path.isdir(data_folder):
         os.mkdir(data_folder)
 
     for file_name in file_dict:
         file_path = os.path.join(data_folder, file_name)
         if not os.path.isfile(file_path):
-            uncompress_file(data_folder, file_name)
+            download_file(data_folder, file_name)
 
     return verify_data(data_folder)

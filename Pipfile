@@ -11,11 +11,10 @@ scikit-learn = "*"
 polartransform = "*"
 h5py = "*"
 matplotlib = "*"
-gdown = "*"
 
 [dev-packages]
-jupyterlab = "<3.0.0"
+jupyterlab = "*"
 arrow = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.7"

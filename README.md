@@ -4,7 +4,8 @@ In this repository, we provide codes to reproduce the result describe in the fol
 
 ### Climate Trends of Tropical Cyclone Intensity and Energy Extremes Revealed by Deep Learning
 
-Buo-Fu Chen,
+Buo-Fu Chen
+
 Center for Weather Climate and Disaster Research, National Taiwan University, Taiwan
 
 
